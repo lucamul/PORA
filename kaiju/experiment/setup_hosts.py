@@ -369,7 +369,7 @@ if __name__ == "__main__":
         system("cp experiments.py "+args.output_dir)
         fresh = experiment["freshness"]
         replication = experiment["replication"]
-        tester = experiment["ra_tester"]
+        tester = experiment["tester"]
 
         if replication == 1:
             is_replicated = True

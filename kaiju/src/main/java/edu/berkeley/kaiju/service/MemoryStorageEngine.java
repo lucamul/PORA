@@ -458,11 +458,11 @@ public class MemoryStorageEngine {
                 long t = this.freshness(key, candidateStamp);
                 logger.warn("Freshness for key: " + key + " timestamp: " + candidateStamp + " = " + t);
             }
-            return candidate;
+            if(candidate != null) {
+                return candidate;
+            }
         }
-
-        return null
-;
+        return null;
     }
 
     private DataItem getLatestItemForKey(String key) {
@@ -596,7 +596,7 @@ public class MemoryStorageEngine {
 
     private void prepare(String key, DataItem value) {
         dataItems.put(new KeyTimestampPair(key, value.getTimestamp()), value);
-        if(Config.getConfig().freshness_test != 1 && Config.getConfig().ra_tester != -1) // freshness logging and measurement slows the system to the point that GC for these is not useful.
+        if(Config.getConfig().freshness_test != 1 && Config.getConfig().ra_tester != 1) // freshness logging and measurement slows the system to the point that GC for these is not useful.
             markPreparedForGC(key,value.getTimestamp()); 
         if(isEiger) {
             if(!eigerMap.containsKey(key))
